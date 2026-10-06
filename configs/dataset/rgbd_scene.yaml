@@ -1,0 +1,89 @@
+defaults:
+  - dataloader: gnndatasetrgbdscenehierarchical
+dataloader_name: gnndatasetrgbdscenehierarchical
+
+dataset_basedir: ./data/rgbd_final
+scene_train_dir: ./data/rgbd_final/scene_train
+scene_val_dir: ./data/rgbd_final/scene_val
+
+robot_name_list:
+  - franka_panda
+  - Allegro
+  - robotiq_3finger
+
+# Percentage of training scenes to keep when using the hierarchical dataloader.
+# Set to 100 for the full training split, or 10-100 to subsample scenes.
+train_scene_percent: 100
+
+# Point cloud parameters
+num_scene_pts: 2048
+knn: 16
+
+# Multi-camera fusion parameters
+cameras:
+  - camera_north_depth
+  - camera_south_depth
+  - camera_east_depth
+  - camera_west_depth
+  - camera_bev_depth
+
+# Spatial filtering bounds (XY plane)
+spatial_bounds:
+  min_xy: -0.5
+  max_xy: 0.5
+
+# Voxel downsampling for merging close points
+voxel_size: 0.005
+
+# DOF mapping from source ordering to SeededGrasp ordering.
+# Entries are kept for grippers not in robot_name_list, but adding one back
+# requires pad_q >= 9 + its DOF count (shadowhand needs 22, i.e. pad_q >= 31).
+dof_mapping:
+  allegro: [0,4,8,12,2,6,10,14,3,7,11,15,1,5,9,13]
+  shadowhand: [4, 9, 14, 19, 21, 0, 5, 10, 15, 2, 7, 12, 17, 3, 8, 13, 18, 1, 6, 11, 16, 20]
+  franka_panda: [0, 1]
+  # robotiq_3finger: [2, 9, 10, 1, 6, 7, 8, 0, 3, 4, 5]
+  robotiq_3finger: [2, 5, 8, 1, 4, 7, 10, 0, 3, 6, 9]
+
+base_pt_offset:
+  allegro: [0.0, 0.0, 0.0]
+  robotiq_3finger: [0.0, 0.05, 0.0]
+  franka_panda: [0.0, 0.0, 0.075]
+
+
+# Canonical rotation frame used during training (rot6d).
+canonical_rot6d: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0]
+
+# Per-gripper base orientation in the original dataset/world frame (rot6d).
+# Dataloader maps q[:, 3:9] into canonical frame; inference applies inverse map.
+gripper_alignment_rot6d:
+  franka_panda: [-1.0, 0.0, 0.0, 0.0, 1.0, 0.0]
+  allegro: [0.0, 0.0, -1.0, -1.0, 0.0, 0.0]
+  robotiq_3finger: [-1.0, 0.0, 0.0, 0.0, 0.0, -1.0]
+
+robot_name_mapping:
+  Allegro: allegro
+  shadow_hand: shadowhand
+  franka_panda: franka_panda
+  robotiq_3finger: robotiq_3finger
+
+trans_limits: 0.9
+dof_limits:
+  allegro: [-0.2, 1.8]
+  franka_panda: [0, 0.05]
+  robotiq_3finger: [-1.0, 1.6]
+
+# Grasp vectors are padded to a fixed width so grippers with different DOF
+# counts can share one model: 9 pose dims (3 translation + 6D rotation) plus
+# the largest joint count in robot_name_list (16, the Allegro hand).
+# Raising this requires retraining -- it changes the model's output width.
+pad_q: 25
+augment_rot: True
+augment_trans: True
+augment_pc: True
+# Gaussian noise (metres, per-axis std) added to the ground-truth seed point
+# during training. Stops the model from learning to place the palm centre
+# exactly on the seed point instead of reasoning about local geometry.
+augment_seed_pt: True
+seed_pt_noise_std: 0.005
+normalize_q: True

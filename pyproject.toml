@@ -1,0 +1,25 @@
+# Directories holding data, vendored assets and run outputs. None of this is
+# project source, so the formatters and linter must not descend into it.
+[tool.black]
+line-length = 100
+target-version = ["py310"]
+force-exclude = "^/(data|data_archive|archive|outputs|logs_.*|vlm_output.*|vlm_input|generated_grasps|canonical_baselines)/"
+
+[tool.isort]
+profile = "black"
+line_length = 100
+known_first_party = ["models", "utils", "utils_data", "training", "inference", "visualization", "data_prep"]
+extend_skip_glob = ["data/*", "data_archive/*", "archive/*", "outputs/*", "logs_*/*", "vlm_output*/*", "vlm_input/*", "generated_grasps/*", "canonical_baselines/*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+extend-exclude = ["data", "data_archive", "archive", "outputs", "logs_*", "vlm_output*", "vlm_input", "generated_grasps", "canonical_baselines"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W"]
+# E501: line length is handled by black.
+# E402: many scripts insert the repo root onto sys.path before their first
+# repo-local import (see the `_REPO_ROOT` pattern used throughout), which is
+# intentional and not something to "fix".
+ignore = ["E501", "E402"]

@@ -1,0 +1,4 @@
+defaults:
+  - dataset: rgbd_scene.yaml
+  - model: flow.yaml
+  - train: flow_trans.yaml

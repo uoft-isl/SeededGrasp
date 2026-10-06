@@ -1,0 +1,38 @@
+# Model input dimensions
+point_cloud_embeddings_dim: 512
+time_dim: 512
+query_dim: 512
+
+# x embedder parameters
+x_embed_dim: 512
+
+# Point cloud encoder parameters
+obj_in_feats: 64
+robot_in_feats: 64
+hidden_n: 256
+gcn_dropout: 0.5
+gcn_num_hidden: 3
+
+# Number of gripper surface points sampled per forward pass. Must match the
+# default in utils.gripper_utils.HandModel.get_surface_points, which the
+# visualization scripts call without access to this config.
+robot_pc_n: 1024
+
+# Attention
+num_heads_xattn: 8
+
+# Flow-matching time sampling: t ~ Beta(beta_a, beta_b), biased toward t -> 1
+# so the loss emphasises the late, high-precision part of the trajectory.
+beta_a: 1.5
+beta_b: 1.0
+
+# Classifier-free guidance weight applied at inference:
+#   u = w * u_cond + (1 - w) * u_uncond
+# w = 1.0 disables guidance (the unconditional branch is skipped entirely).
+w: 1.1
+zero_null_token: True
+
+animate_path: True
+plot_grasps: True
+export_grasps: False
+gen_samples: 10

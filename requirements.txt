@@ -1,0 +1,33 @@
+# Tested with Python 3.10 on Linux + CUDA-capable GPU.
+# Install with: pip install -r requirements.txt
+
+# Core ML
+torch==2.6.0
+torchvision==0.21.0
+torchaudio==2.6.0
+
+# Config management
+hydra-core==1.3.2
+omegaconf==2.3.0
+
+# Geometry / robotics
+open3d==0.19.0
+trimesh==4.6.13
+pypose==0.7.3
+pytorch-kinematics==0.7.5
+transforms3d==0.4.2
+urdf_parser_py==0.0.4
+pillow==11.3.0
+
+# Data / numerics
+numpy==2.2.6
+scipy==1.15.3
+pandas==2.3.1
+tqdm==4.67.1
+
+# Visualization
+plotly==6.2.0
+
+# VLM-seeded pipeline (seed-point generation)
+openai==1.99.9
+python-dotenv==1.2.1

@@ -1,0 +1,71 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# SeededGrasp
+data/
+logs_train/
+logs_out/
+
+square.jpg
+
+api_keys.json
+.env
+
+outputs
+assets
+*.html
+eval_*/
+generated_grasps/
+vlm_input
+vlm_output
+vlm_output_rebuttal
+lang_base_res
+utils_compute_canada
+archive
+data_archive
+vlm_images
+logs_cc
+logs_train_flow_trans
+hand_models.pt
+
+# Default output artifacts, when run from the repo root instead of into one
+# of the ignored directories above (some of these are produced by tools no
+# longer in this repo, but are kept here in case leftover output files from
+# them still exist on disk).
+*_predicted_grasps.json
+sampled_grasps_*.json
+canonical_baselines/
+grasp_quality*.csv
+grasp_quality*summary*.txt
+scene_statistics*.csv
+scene_statistics*summary*.txt
+
+# Local scratch files that sit at the repo root and are NOT part of the
+# release. Several embed absolute paths from the machine they were produced
+# on, so they must never be staged (e.g. by `git add -A`).
+auto_gen.sh
+apr_26_*.json
+scene_all_*_eval.json
+single_obj_scenes.json

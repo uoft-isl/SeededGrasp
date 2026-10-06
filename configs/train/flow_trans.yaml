@@ -1,0 +1,21 @@
+seed: 42
+log_basedir: ./logs_train_flow_trans
+exp_name: all_end_effectors_object_split
+weights_dir: weights
+weights_name: grasp_gnn.pth
+tb_dir: tb_dir
+
+batch_size: 128
+epochs: 2500
+lr: 0.0001
+lr_decay: 0.00
+lr_decay_epochs: 30
+weight_decay: 0.05
+
+drop_condition_prob: 0.03
+
+# Conditional flow-matching loss weights (lambda_trans, lambda_rot,
+# lambda_joints) balancing the translation, rotation and joint-angle terms.
+lambda_trans: 0.4
+lambda_rot: 0.04
+lambda_joints: 0.8
